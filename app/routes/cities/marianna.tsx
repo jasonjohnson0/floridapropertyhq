@@ -323,8 +323,44 @@ export default function Marianna() {
         </div>
       </section>
 
-      {/* Related Resources */}
+      {/* Community Directory */}
       <section className="py-14 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">
+            Marianna & Jackson County Community Directory
+          </h2>
+          <p className="text-slate-500 mb-8">
+            Contact information, maps, and staff directories for the key civic
+            institutions in Marianna and Jackson County.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4 mb-6">
+            {[
+              { name: "Jackson County Chamber of Commerce", category: "Chamber of Commerce", address: "4318 Lafayette St, Marianna FL 32446", phone: "850-482-8060", color: "bg-amber-100 text-amber-800" },
+              { name: "Jackson Hospital", category: "Hospital", address: "4250 Hospital Drive, Marianna FL 32446", phone: "850-526-2200", color: "bg-red-100 text-red-800" },
+              { name: "City of Marianna", category: "Municipal Government", address: "2898 Green Street, Marianna FL 32446", phone: "850-482-4353", color: "bg-blue-100 text-blue-800" },
+              { name: "Jackson County Board of County Commissioners", category: "County Government", address: "2864 Madison Street, Marianna FL 32448", phone: "(850) 482-9633", color: "bg-indigo-100 text-indigo-800" },
+            ].map((entity) => (
+              <div key={entity.name} className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${entity.color}`}>
+                  {entity.category}
+                </span>
+                <h3 className="font-bold text-slate-900 mt-3 mb-1 text-sm">{entity.name}</h3>
+                <p className="text-xs text-slate-500 mb-1">{entity.address}</p>
+                <a href={`tel:${entity.phone.replace(/[^0-9]/g, "")}`} className="text-xs text-blue-700 hover:underline font-medium">{entity.phone}</a>
+              </div>
+            ))}
+          </div>
+          <Link
+            to="/cities/marianna/directory"
+            className="inline-flex items-center gap-2 bg-blue-950 text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-blue-900 transition-colors"
+          >
+            Full Directory — Maps, Staff & All Contact Info →
+          </Link>
+        </div>
+      </section>
+
+      {/* Related Resources */}
+      <section className="py-14 px-4 bg-slate-50">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold text-slate-900 mb-6">
             Related Resources
