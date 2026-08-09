@@ -122,7 +122,7 @@ export default function HomeownersInsurance() {
             </p>
             <p>
               This guide covers the types of coverage relevant to this region, the
-              Bay County and Jackson County specific contexts, and the practical
+              <a href="https://ellisagency.net" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline font-medium">Bay County and Jackson County</a> specific contexts, and the practical
               steps that actually make a difference in what you pay and what you're
               covered for.
             </p>
