@@ -121,6 +121,78 @@ const entities = [
   },
 ];
 
+const partners = [
+  {
+    id: "ellis-agency-marianna",
+    name: "Ellis Agency Insurance",
+    category: "Insurance — Preferred Partner",
+    tagline: "Independent insurance with a Marianna office — serving Jackson County and the inland Panhandle.",
+    description:
+      "Ellis Agency is an independent Allstate agency with a Marianna office on US-90, in addition to locations in Panama City and Altha. As an independent agency they compare multiple carriers to find the right fit for your home, auto, landlord, or business coverage. They understand the inland Panhandle market — sinkhole exposure, older housing stock, river flood risk — and they're the insurance agency we recommend for Jackson County property owners.",
+    address: "4713 US-90, Marianna, FL 32446",
+    phone: "(850) 526-2201",
+    website: "https://www.ellisagency.net",
+    websiteLabel: "ellisagency.net",
+    mapQuery: "4713+US-90+Marianna+FL+32446",
+    services: ["Home Insurance", "Landlord Insurance", "Auto", "Umbrella", "Business", "Life & Income"],
+  },
+  {
+    id: "jim-roberts-realty",
+    name: "Jim Roberts Realty",
+    category: "Real Estate — Preferred Partner",
+    tagline: "Marianna's longest-running realty firm. Family-owned since 1974. Voted best in the region.",
+    description:
+      "Jim Roberts Realty has been the go-to real estate firm in Marianna and Jackson County since Jim Roberts founded it in 1974. Now led by second-generation owner Robby Roberts, the agency specializes in residential homes, land, farms, timber tracts, and rural properties across Jackson, Washington, Holmes, and Calhoun counties. No one knows the local land and housing market better.",
+    address: "4207 Lafayette St, Marianna, FL 32446",
+    phone: "(850) 482-4635",
+    website: "https://www.jimrobertsrealty.com",
+    websiteLabel: "jimrobertsrealty.com",
+    mapQuery: "4207+Lafayette+St+Marianna+FL+32446",
+    services: ["Residential Sales", "Land & Acreage", "Farms & Timber", "Rural Properties", "MLS Search"],
+  },
+];
+
+const partnerSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "InsuranceAgency",
+      "name": "Ellis Agency Insurance — Marianna",
+      "url": "https://www.ellisagency.net",
+      "telephone": "+18505262201",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "4713 US-90",
+        "addressLocality": "Marianna",
+        "addressRegion": "FL",
+        "postalCode": "32446",
+        "addressCountry": "US"
+      },
+      "areaServed": ["Jackson County, FL", "Marianna, FL", "Northwest Florida"],
+      "description": "Independent Allstate insurance agency serving Jackson County and the inland Florida Panhandle with home, auto, landlord, and business insurance.",
+      "sameAs": "https://www.ellisagency.net"
+    },
+    {
+      "@type": "RealEstateAgent",
+      "name": "Jim Roberts Realty",
+      "url": "https://www.jimrobertsrealty.com",
+      "telephone": "+18504824635",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "4207 Lafayette St",
+        "addressLocality": "Marianna",
+        "addressRegion": "FL",
+        "postalCode": "32446",
+        "addressCountry": "US"
+      },
+      "areaServed": ["Jackson County, FL", "Washington County, FL", "Holmes County, FL", "Calhoun County, FL", "Florida Panhandle"],
+      "description": "Family-owned real estate agency serving the Florida Panhandle since 1974. Specializing in residential, land, farms, and rural properties in Jackson County and surrounding areas.",
+      "foundingDate": "1974",
+      "sameAs": "https://www.jimrobertsrealty.com"
+    }
+  ]
+};
+
 const categoryColors: Record<string, string> = {
   "Chamber of Commerce": "bg-amber-100 text-amber-800",
   "Hospital": "bg-red-100 text-red-800",
@@ -131,6 +203,11 @@ const categoryColors: Record<string, string> = {
 export default function MariannaDirectory() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(partnerSchema) }}
+      />
+
       {/* Hero */}
       <section className="bg-gradient-to-br from-blue-950 to-blue-900 text-white py-14 px-4">
         <div className="max-w-4xl mx-auto">
@@ -151,6 +228,75 @@ export default function MariannaDirectory() {
             >
               ← Back to Marianna Property Guide
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Preferred Partners */}
+      <section className="bg-white border-b border-amber-200 py-10 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="bg-amber-400 text-blue-950 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              Preferred Partners
+            </span>
+            <p className="text-slate-500 text-sm">
+              Recommended local professionals for insurance and real estate in the Panhandle
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {partners.map((partner) => (
+              <div
+                key={partner.id}
+                id={partner.id}
+                className="border-2 border-amber-300 rounded-2xl overflow-hidden bg-amber-50/30"
+              >
+                <div className="px-5 pt-5 pb-4 border-b border-amber-100">
+                  <span className="text-xs font-semibold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">
+                    {partner.category}
+                  </span>
+                  <h2 className="text-lg font-bold text-slate-900 mt-2 mb-1">{partner.name}</h2>
+                  <p className="text-xs text-slate-500 italic mb-2">{partner.tagline}</p>
+                  <p className="text-slate-600 text-sm leading-relaxed">{partner.description}</p>
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    {partner.services.map((s) => (
+                      <span key={s} className="bg-white border border-amber-200 text-slate-600 text-xs px-2 py-0.5 rounded-full">{s}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-0">
+                  <div className="px-5 py-4 border-r border-amber-100">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Address</p>
+                    <p className="text-slate-800 text-xs font-medium mb-1">{partner.address}</p>
+                    <a
+                      href={`https://maps.google.com/?q=${partner.mapQuery}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-blue-700 hover:underline"
+                    >
+                      Open in Google Maps ↗
+                    </a>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5 mt-3">Phone</p>
+                    <a href={`tel:${partner.phone.replace(/[^0-9]/g, "")}`} className="text-blue-700 hover:underline text-sm font-semibold">
+                      {partner.phone}
+                    </a>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5 mt-3">Website</p>
+                    <a href={partner.website} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline text-xs font-medium">
+                      {partner.websiteLabel} ↗
+                    </a>
+                  </div>
+                  <div>
+                    <iframe
+                      title={`Map of ${partner.name}`}
+                      src={`https://maps.google.com/maps?q=${partner.mapQuery}&output=embed`}
+                      width="100%"
+                      height="180"
+                      style={{ border: 0, display: "block" }}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

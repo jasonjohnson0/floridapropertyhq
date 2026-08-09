@@ -111,6 +111,78 @@ const entities = [
   },
 ];
 
+const partners = [
+  {
+    id: "ellis-agency-pc",
+    name: "Ellis Agency Insurance",
+    category: "Insurance — Preferred Partner",
+    tagline: "Independent insurance serving the Panhandle since the Ellis family opened their doors in Panama City.",
+    description:
+      "Ellis Agency is an independent Allstate agency with offices across the Panhandle including Panama City and Marianna. As an independent agency they compare multiple carriers — not just one — to match you with the right coverage for home, auto, landlord, and business insurance. They're the agency we recommend for Bay County property insurance needs.",
+    address: "1134 Harrison Ave, Panama City, FL 32401",
+    phone: "(850) 763-1627",
+    website: "https://www.ellisagency.net",
+    websiteLabel: "ellisagency.net",
+    mapQuery: "1134+Harrison+Ave+Panama+City+FL+32401",
+    services: ["Home Insurance", "Landlord Insurance", "Condo Insurance", "Auto", "Umbrella", "Business"],
+  },
+  {
+    id: "jim-roberts-realty",
+    name: "Jim Roberts Realty",
+    category: "Real Estate — Preferred Partner",
+    tagline: "Family-owned and Panhandle-rooted since 1974. Voted best real estate agency in the region.",
+    description:
+      "Jim Roberts Realty has served the Florida Panhandle since Jim Roberts opened the agency in 1974. Now led by second-generation owner Robby Roberts, the firm specializes in residential, land, farms, and timber tracts across Jackson, Washington, Holmes, and Calhoun counties. If you're buying or selling anywhere in the inland Panhandle, they're the local experts we trust.",
+    address: "4207 Lafayette St, Marianna, FL 32446",
+    phone: "(850) 482-4635",
+    website: "https://www.jimrobertsrealty.com",
+    websiteLabel: "jimrobertsrealty.com",
+    mapQuery: "4207+Lafayette+St+Marianna+FL+32446",
+    services: ["Residential Sales", "Land & Acreage", "Farms & Timber", "Rural Properties", "MLS Search"],
+  },
+];
+
+const partnerSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "InsuranceAgency",
+      "name": "Ellis Agency Insurance — Panama City",
+      "url": "https://www.ellisagency.net",
+      "telephone": "+18507631627",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1134 Harrison Ave",
+        "addressLocality": "Panama City",
+        "addressRegion": "FL",
+        "postalCode": "32401",
+        "addressCountry": "US"
+      },
+      "areaServed": ["Bay County, FL", "Panama City, FL", "Northwest Florida"],
+      "description": "Independent Allstate insurance agency serving Bay County and the Florida Panhandle with home, auto, landlord, and business insurance.",
+      "sameAs": "https://www.ellisagency.net"
+    },
+    {
+      "@type": "RealEstateAgent",
+      "name": "Jim Roberts Realty",
+      "url": "https://www.jimrobertsrealty.com",
+      "telephone": "+18504824635",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "4207 Lafayette St",
+        "addressLocality": "Marianna",
+        "addressRegion": "FL",
+        "postalCode": "32446",
+        "addressCountry": "US"
+      },
+      "areaServed": ["Jackson County, FL", "Washington County, FL", "Holmes County, FL", "Calhoun County, FL", "Florida Panhandle"],
+      "description": "Family-owned real estate agency serving the Florida Panhandle since 1974. Specializing in residential, land, farms, and rural properties.",
+      "foundingDate": "1974",
+      "sameAs": "https://www.jimrobertsrealty.com"
+    }
+  ]
+};
+
 const categoryColors: Record<string, string> = {
   "Chamber of Commerce": "bg-amber-100 text-amber-800",
   "Hospital": "bg-red-100 text-red-800",
@@ -121,6 +193,11 @@ const categoryColors: Record<string, string> = {
 export default function PanamaCityDirectory() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(partnerSchema) }}
+      />
+
       {/* Hero */}
       <section className="bg-gradient-to-br from-blue-950 to-blue-900 text-white py-14 px-4">
         <div className="max-w-4xl mx-auto">
@@ -141,6 +218,75 @@ export default function PanamaCityDirectory() {
             >
               ← Back to Panama City Property Guide
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Preferred Partners */}
+      <section className="bg-white border-b border-amber-200 py-10 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="bg-amber-400 text-blue-950 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              Preferred Partners
+            </span>
+            <p className="text-slate-500 text-sm">
+              Recommended local professionals for insurance and real estate in the Panhandle
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {partners.map((partner) => (
+              <div
+                key={partner.id}
+                id={partner.id}
+                className="border-2 border-amber-300 rounded-2xl overflow-hidden bg-amber-50/30"
+              >
+                <div className="px-5 pt-5 pb-4 border-b border-amber-100">
+                  <span className="text-xs font-semibold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">
+                    {partner.category}
+                  </span>
+                  <h2 className="text-lg font-bold text-slate-900 mt-2 mb-1">{partner.name}</h2>
+                  <p className="text-xs text-slate-500 italic mb-2">{partner.tagline}</p>
+                  <p className="text-slate-600 text-sm leading-relaxed">{partner.description}</p>
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    {partner.services.map((s) => (
+                      <span key={s} className="bg-white border border-amber-200 text-slate-600 text-xs px-2 py-0.5 rounded-full">{s}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-0">
+                  <div className="px-5 py-4 border-r border-amber-100">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Address</p>
+                    <p className="text-slate-800 text-xs font-medium mb-1">{partner.address}</p>
+                    <a
+                      href={`https://maps.google.com/?q=${partner.mapQuery}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-blue-700 hover:underline"
+                    >
+                      Open in Google Maps ↗
+                    </a>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5 mt-3">Phone</p>
+                    <a href={`tel:${partner.phone.replace(/[^0-9]/g, "")}`} className="text-blue-700 hover:underline text-sm font-semibold">
+                      {partner.phone}
+                    </a>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5 mt-3">Website</p>
+                    <a href={partner.website} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline text-xs font-medium">
+                      {partner.websiteLabel} ↗
+                    </a>
+                  </div>
+                  <div>
+                    <iframe
+                      title={`Map of ${partner.name}`}
+                      src={`https://maps.google.com/maps?q=${partner.mapQuery}&output=embed`}
+                      width="100%"
+                      height="180"
+                      style={{ border: 0, display: "block" }}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
